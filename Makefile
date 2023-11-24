@@ -33,6 +33,10 @@ migrate:
 rollback:
 	dbmate -u "postgres://$(DB_USER):$(DB_PWD)@127.0.0.1:$(DB_PORT)/$(DB_NAME)?sslmode=disable" down
 
+.PHONY: dump_ci
+dump_ci:
+	dbmate -u "postgres://$(DB_USER):$(DB_PWD)@localhost:$(DB_PORT)/$(DB_NAME)?sslmode=disable" dump > postgres_test.sql
+
 .PHONY: print_url
 print:
 	echo "postgres://$(DB_USER):$(DB_PWD)@localhost:$(DB_PORT)/$(DB_NAME)"
