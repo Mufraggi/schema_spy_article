@@ -23,12 +23,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Install dockerize
+      run: |
+        wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz
+        tar -xzvf dockerize-linux-amd64-v0.6.1.tar.gz
+        sudo mv dockerize /usr/local/bin/dockerize
+        rm dockerize-linux-amd64-v0.6.1.tar.gz
+
     - name: Set up PostgreSQL
       run: |
         echo "Waiting for PostgreSQL to start..."
         dockerize -wait tcp://localhost:5432 -timeout 1m
         echo "PostgreSQL is up and running!"
 
+  
     - name: Run your tests or other CI tasks
       run: |
         echo "hugo"
