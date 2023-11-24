@@ -8,7 +8,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:15.0
         env:
           POSTGRES_DB: mydb
           POSTGRES_USER: user
