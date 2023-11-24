@@ -4,11 +4,11 @@ on: [push]
 
 jobs:
   build:
-    runs-on: debian:latest
+    runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres:15.0
+        image: postgres:14.0
         env:
           POSTGRES_DB: mydb
           POSTGRES_USER: user
