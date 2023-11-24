@@ -23,20 +23,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install dockerize
+    - name: Download and install dbmate
       run: |
-        wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz
-        tar -xzvf dockerize-linux-amd64-v0.6.1.tar.gz
-        sudo mv dockerize /usr/local/bin/dockerize
-        rm dockerize-linux-amd64-v0.6.1.tar.gz
+        curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
+        chmod +x /usr/local/bin/dbmate
 
-    - name: Set up PostgreSQL
+    - name: Install PostgreSQL and client
       run: |
-        echo "Waiting for PostgreSQL to start..."
-        dockerize -wait tcp://localhost:5432 -timeout 1m
-        echo "PostgreSQL is up and running!"
+        apt-get update
+        apt-get install postgresql -y
+        apt-get install postgresql-client -y
 
-  
-    - name: Run your tests or other CI tasks
+    - name: Run migrations and dump data
       run: |
-        echo "hugo"
+        make migrate
+        make dump_ci
+        mv db/schema.sql postgres_test.sql
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: postgres_test_sql
+        path: postgres_test.sql
