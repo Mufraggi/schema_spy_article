@@ -30,10 +30,9 @@ jobs:
 
     - name: Install PostgreSQL and client
       run: |
-        apt-get update
-        apt-get install postgresql -y
-        apt-get install postgresql-client -y
-
+        sudo apt-get update
+        sudo apt-get install postgresql -y
+        sudo apt-get install postgresql-client -y
     - name: Run migrations and dump data
       run: |
         make migrate
