@@ -75,8 +75,7 @@ jobs:
           sudo apt-get install graphviz -y
           rm -r db
           mkdir db
-          ls 
-          ls public
+          mv public/postgres_test.sql .
           PGPASSWORD=password psql -U user -h localhost -p 5432 -d mydb -f postgres_test.sql
          
 
