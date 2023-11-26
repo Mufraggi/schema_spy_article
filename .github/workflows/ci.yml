@@ -61,8 +61,6 @@ jobs:
 
       - name: Configure l'environnement pour SchemaSpy
         run: |
-          mkdir -p /drivers_inc
-          curl -fsSL -o /drivers_inc/postgresql-42.1.1.jre7.jar https://jdbc.postgresql.org/download/postgresql-42.1.1.jre7.jar
           apt-get update
           apt-get install default-jdk -y
           apt-get install postgresql-client -y
