@@ -61,10 +61,10 @@ jobs:
 
       - name: Configure l'environnement pour SchemaSpy
         run: |
-          apt-get update
-          apt-get install default-jdk -y
-          apt-get install postgresql-client -y
-          apt-get install graphviz -y
+          sudo apt-get update
+          sudo apt-get install default-jdk -y
+          sudo apt-get install postgresql-client -y
+          sudo apt-get install graphviz -y
          
 
       - name: Exécuter SchemaSpy
