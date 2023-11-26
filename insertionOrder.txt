@@ -1,0 +1,5 @@
+articles
+tags
+article_tag
+schema_migrations
+users
