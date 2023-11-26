@@ -67,6 +67,9 @@ jobs:
           sudo apt-get install default-jdk -y
           sudo apt-get install postgresql-client -y
           sudo apt-get install graphviz -y
+          rm -r db
+          mkdir db
+          PGPASSWORD=password psql -U user -h localhost -p 5432 -d mydb -f postgres_test.sql
          
 
       - name: Exécuter SchemaSpy
