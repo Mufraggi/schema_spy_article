@@ -113,14 +113,10 @@ jobs:
           name: documentation-artifact
           path: public
 
-      - name: Exécuter SchemaSpy
-        run: |
-          ls public
-          mv public/documentation-artifact .
 
       - name: "Deploy Github Pages"
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           BRANCH: gh-pages
-          FOLDER: documentation-artifact/
+          FOLDER: public/
   
