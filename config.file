@@ -1,0 +1,13 @@
+
+schemaspy.t=pgsql
+
+schemaspy.dp=postgresql-42.6.0.jar
+
+schemaspy.host=postgres
+schemaspy.port=5432
+schemaspy.db=mydb
+schemaspy.u=user
+schemaspy.p=password
+
+schemaspy.o=./public
+schemaspy.s=public
