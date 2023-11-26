@@ -60,6 +60,12 @@ jobs:
     steps:
       - name: Checkout du code
         uses: actions/checkout@v2
+      
+      - name: Télécharger l'artefact du job build
+        uses: actions/download-artifact@v2
+        with:
+          name: postgres_test_sql
+          path: public
 
       - name: Configure l'environnement pour SchemaSpy
         run: |
