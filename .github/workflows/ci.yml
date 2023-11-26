@@ -29,9 +29,6 @@ jobs:
         curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
         chmod +x /usr/local/bin/dbmate
 
-    - name: Use pg_dump from PostgreSQL service
-      run: |
-        dbmate -u "postgres://user:password@localhost:5432/mydb?sslmode=disable" dump > postgres_test.sql
     - name: Run migrations and dump data
       run: |
         make migrate
@@ -43,3 +40,41 @@ jobs:
       with:
         name: postgres_test_sql
         path: postgres_test.sql
+
+  documentation:
+    runs-on: ubuntu-latest
+    needs: SchemaSpy-init
+    
+    services:
+      postgres:
+        image: postgres:15.0
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mydb
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configurer l'environnement pour SchemaSpy
+        run: |
+          mkdir -p /drivers_inc
+          curl -fsSL -o /drivers_inc/postgresql-42.1.1.jre7.jar https://jdbc.postgresql.org/download/postgresql-42.1.1.jre7.jar
+          apt-get update
+          apt-get install default-jdk -y
+          apt-get install postgresql-client -y
+          apt-get install graphviz -y
+          rm -r db
+          mkdir db
+          PGPASSWORD=password psql -U user -h localhost -p 5432 -d mydb -f postgres_test.sql
+
+      - name: Exécuter SchemaSpy
+        run: |
+          java -jar schemaspy-6.2.4.jar -configFile config.file -debug
+    artifacts:
+      paths:
+        - public
