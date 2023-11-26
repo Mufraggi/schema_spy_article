@@ -115,7 +115,8 @@ jobs:
 
       - name: Exécuter SchemaSpy
         run: |
-          ls
+          ls public
+          mv public/documentation-artifact .
 
       - name: "Deploy Github Pages"
         uses: JamesIves/github-pages-deploy-action@3.7.1
