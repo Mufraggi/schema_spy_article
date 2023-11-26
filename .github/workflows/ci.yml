@@ -97,6 +97,11 @@ jobs:
     
       - name: Checkout du code
         uses: actions/checkout@v2
+      
+      - name: Exécuter SchemaSpy
+        run: |
+          ls
+          echo aaaaaaa
 
       - name: download documentation
         uses: actions/download-artifact@v2
